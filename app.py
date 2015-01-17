@@ -17,7 +17,7 @@ def chance():
 
 @app.route('/showC')
 def showC():
-	page = requests.get("http://philadelphia.craigslist.org/search/sss?query=monitor&sort=rel")
+	page = requests.get("http://philadelphia.craigslist.org/search/sss?query="+"monitor"+"&sort=rel")
 	soup = bs4.BeautifulSoup(page.text)
 	links = soup.select('a.hdrlnk')
 	stringLinks = []
