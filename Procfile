@@ -1,1 +1,1 @@
-web: python app.py; phantomjs
+web: python app.py
