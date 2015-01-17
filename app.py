@@ -23,7 +23,10 @@ def hello():
 		return redirect('/show/'+search)
 	return render_template("index.html")
 
-
+@app.route('/form', methods=['GET', 'POST'])
+def form():
+	return render_template("form.html")
+	
 @app.route('/show')
 def showC(item=None):
 	page = requests.get("http://philadelphia.craigslist.org/search/sss?query="+"monitor"+"&sort=rel")
