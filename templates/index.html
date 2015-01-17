@@ -10,10 +10,12 @@
 		<div class="col-md-4"></div>
 	</div>
 	<br>
+	<form action="/" method="POST">
+	<div class="center"><h2 style="color:#e74c3c;">{{error}}</h2><br></div>
 	<div class="row">
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
-			<input class="form-control" placeholder="search">
+			<input class="form-control circle" placeholder="search" name="search">
 		</div>
 		<div class="col-md-4"></div>
 	</div>
@@ -21,8 +23,8 @@
 	<div class="row">
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
-			<select class="form-control" id="select">
-                <option>Philly</option>
+			<select class="form-control" id="select" name="location">
+                <option value="Philly">Philly</option>
             </select>
 		</div>
 		<div class="col-md-4"></div>
@@ -31,5 +33,6 @@
 	<div class="center">
 		<button class="btn btn-lg btn-primary">Search</button>
 	</div>
+	</form>
 </div>
 {% endblock %}

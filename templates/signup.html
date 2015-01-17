@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Signup{% endblock %}
+{% block content %}
+<div class="container center">
+	<h1>Sign Up</h1>
+	<br>
+	<form action="/signup" method="post">
+		{% if full_name_error %}<div class="error">{{full_name_error}}</div><br>{% endif %}
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-2 form_label">Full Name</div>
+			<div class="col-md-2 {% if full_name_error %}has-error{% endif %}">
+				<input type="text" class="form-control" name='full_name' placeholder="Paras Modi">
+			</div>
+			<div class="col-md-6"></div>
+		</div><br>
+		{% if username_error %}<div class="error">{{username_error}}</div><br>{% endif %}
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-2 form_label">Username</div>
+			<div class="col-md-2 {% if username_error %}has-error{% endif %}">
+				<input type="text" class="form-control" name='username' placeholder="parmod" >
+			</div>
+			<div class="col-md-6"></div>
+		</div><br>
+		{% if email_error %}<div class="error">{{email_error}}</div><br>{% endif %}
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-2 form_label">Email</div>
+			<div class="col-md-2 {% if email_error %}has-error{% endif %}">
+				<input type="text" class="form-control" name='email' placeholder="email@gmail.com" >
+			</div>
+			<div class="col-md-6"></div>
+		</div><br>
+		{% if phone_error %}<div class="error">{{phone_error}}</div><br>{% endif %}
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-2 form_label">Phone Number</div>
+			<div class="col-md-2 {% if phone_error %}has-error{% endif %}">
+				<input type="text" class="form-control" name='phone' placeholder="201-666-7777" >
+			</div>
+			<div class="col-md-6"></div>
+		</div><br>
+		{% if password_error %}<div class="error">{{password_error}}</div><br>{% endif %}
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-2 form_label">Password</div>
+			<div class="col-md-2 {% if password_error %}has-error{% endif %}">
+				<input type="password" class="form-control" name='password' placeholder="password">
+			</div>
+			<div class="col-md-6"></div>
+		</div><br>
+		{% if password_confirm_error %}<div class="error">{{password_confirm_error}}</div><br>{% endif %}
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-2 form_label">Re-type password</div>
+			<div class="col-md-2 {% if password_confirm_error %}has-error{% endif %}">
+				<input type="password" class="form-control" name='password_confirm' placeholder="re-type password">
+			</div>
+			<div class="col-md-6"></div>
+		</div><br>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<button type="submit" class="btn btn-lg btn-primary">Sign Up!</button>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+	</form>
+</div>
+{% endblock %}
