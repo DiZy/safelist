@@ -27,6 +27,10 @@ def hello():
 @app.route('/form', methods=['GET', 'POST'])
 def form():
 	return render_template("form.html")
+
+@app.route('/formdone', methods=['GET', 'POST'])
+def formdone():
+	return render_template("formdone.html")
 	
 @app.route('/show')
 def showC(item=None):
