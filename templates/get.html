@@ -5,6 +5,9 @@
 	<form method="POST" action="/post">
 		<div class="center">
 			<input name='person'>
+			{% if person %}
+				{{ person }}
+			{% endif %}
 			<button type="submit">Submit</button>
 		</div>
 	</form>

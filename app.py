@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect
 import jinja2
+import requests
+import bs4
+from selenium import webdriver
 import os
 
 app = Flask(__name__)
@@ -12,6 +15,27 @@ def hello():
 def chance():
 	return redirect('/')
 
+@app.route('/showC')
+def showC():
+	page = requests.get("http://philadelphia.craigslist.org/search/sss?query=monitor&sort=rel")
+	soup = bs4.BeautifulSoup(page.text)
+	links = soup.select('a.hdrlnk')
+	stringLinks = []
+	onlyLinks = []
+	for x in range(0,len(links)):
+		a = str(links[x]).replace("href=\"/", "href=\"http://philadelphia.craigslist.org/").replace("pic","")
+		stringLinks.append(a)
+		onlyLinks.append(a[a.find("href")+40:a.find("html")-1])
+
+	return render_template('display.html', items=stringLinks, links = onlyLinks, length = len(stringLinks))
+
+@app.route('/<shop>/<id>')
+def show(shop,id):
+	driver = webdriver.PhantomJS()
+	driver.get("http://philadelphia.craigslist.org/"+shop+"/"+id+".html")
+	driver.find_element_by_class_name("reply_button").click()
+	a = driver.find_element_by_class_name("anonemail")
+	return render_template('get.html', person=a.text)
 @app.route('/post', methods=['GET','POST'])
 def post():
 	if request.method == 'POST':
