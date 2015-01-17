@@ -4,3 +4,4 @@ gunicorn==0.17.2
 requests==2.5.1
 selenium==2.8.0
 beautifulsoup4==4.3.2
+phantomjs==1.9.8 
