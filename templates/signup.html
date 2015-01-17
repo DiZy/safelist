@@ -61,6 +61,30 @@
 		</div><br>
 		<div class="row">
 			<div class="col-md-4"></div>
+			<div class="col-md-2 form_label">Credit/Debit Card Number</div>
+			<div class="col-md-2 {% if card_number_error %}has-error{% endif %}">
+				<input type="text" class="form-control" name='card_number' placeholder="card number">
+			</div>
+			<div class="col-md-6"></div>
+		</div><br>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-2 form_label">Expiration Date/Year</div>
+			<div class="col-md-2 {% if expiration_error %}has-error{% endif %}">
+				<input type="text" class="form-control" name='expiration' placeholder="xx/xx">
+			</div>
+			<div class="col-md-6"></div>
+		</div><br>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-2 form_label">CVC Code</div>
+			<div class="col-md-2 {% if cvc_error %}has-error{% endif %}">
+				<input type="password" class="form-control" name='cvc' placeholder="cvc">
+			</div>
+			<div class="col-md-6"></div>
+		</div><br>
+		<div class="row">
+			<div class="col-md-4"></div>
 			<div class="col-md-4">
 				<button type="submit" class="btn btn-lg btn-primary">Sign Up!</button>
 			</div>

@@ -6,6 +6,7 @@ from selenium import webdriver
 import os
 from utils import *
 from pymongo import *
+import stripe
 
 app = Flask(__name__)
 app.secret_key = 'not_really_secret'
