@@ -32,11 +32,12 @@ def showC(item=None):
 	soup = bs4.BeautifulSoup(page.text)
 	links = soup.select('a.hdrlnk')
 	prices = soup.select('span.price')
+	images = soup.select('img')
+	print images
 	stringLinks = []
 	onlyLinks = []
 	for x in range(0,len(links)):
-		a = str(links[x]).replace("href=\"/", "href=\"http://philadelphia.craigslist.org/").replace("pic","")
-		
+		a = str(links[x]).replace("href=\"/", "target=\"_tab\"href=\"http://philadelphia.craigslist.org/").replace("pic","")
 		stringLinks.append(a)
 		onlyLinks.append(a[a.find("href")+40:a.find("html")-1])
 	length = 20
