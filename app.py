@@ -6,14 +6,15 @@ from selenium import webdriver
 import os
 from utils import *
 from pymongo import *
-import stripe
 import uuid
+import stripe
 
 app = Flask(__name__)
 app.secret_key = 'not_really_secret'
 client = MongoClient("mongodb://admin:slimreaper35@ds031541.mongolab.com:31541/safelist")
 db = client.get_default_database()
 users = db.users
+charges = db.charges
 
 @app.route('/', methods=['GET','POST'])
 def hello():

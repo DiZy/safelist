@@ -1,8 +1,6 @@
 CREATED = 0
 CHARGED = 1
 
-charges = db.charges
-
 def charge(_id):
 	update = {}
 
