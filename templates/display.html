@@ -1,13 +1,18 @@
 {% extends "base.html" %}
-{% block title %}GET Request{% endblock %}
+{% block title %}Results{% endblock %}
 {% block content %}
-	<h1>Your App Is Running!</h1>
-	
+	<h1>Results</h1>
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-8">
 		{% for x in range(0,length) %}
 			{% autoescape off%} 
 				{{ items[x] }}
 			{% endautoescape %}
-			<button onclick="location.href = '{{ links[x] }}';">Interested?</button>
+			<br>
+			<button class="btn btn-primary center" onclick="location.href = '{{ links[x] }}';">Interested?</button>
 			<br>
 		{% endfor %}
+		</div>
+	</div>
 {% endblock %}

@@ -4,18 +4,27 @@ import requests
 import bs4
 from selenium import webdriver
 import os
+from utils import *
+from pymongo import *
 
 app = Flask(__name__)
+app.secret_key = 'not_really_secret'
+client = MongoClient("mongodb://admin:slimreaper35@ds031541.mongolab.com:31541/safelist")
+db = client.get_default_database()
+users = db.users
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def hello():
+	if request.method == 'POST':
+		search = request.form.get('search')
+		location = request.form.get('location')
+		if not(search):
+			return render_template('index.html', error="Cannot leave search blank")
+		return redirect('/show/'+search)
 	return render_template("index.html")
 
-@app.route('/change')
-def chance():
-	return redirect('/')
 
-@app.route('/showC')
+@app.route('/show')
 def showC(item=None):
 	page = requests.get("http://philadelphia.craigslist.org/search/sss?query="+"monitor"+"&sort=rel")
 	if item:
@@ -32,7 +41,7 @@ def showC(item=None):
 	if (len(stringLinks) < 20):
 		length = len(stringLinks)
 	return render_template('display.html', items=stringLinks, links = onlyLinks, length = length)
-@app.route('/showC/<item>')
+@app.route('/show/<item>')
 def showItem(item):
 	return showC(item)
 @app.route('/<shop>/<id>')
@@ -42,11 +51,51 @@ def show(shop,id):
 	driver.find_element_by_class_name("reply_button").click()
 	a = driver.find_element_by_class_name("anonemail")
 	return render_template('get.html', person=a.text)
-@app.route('/post', methods=['GET','POST'])
-def post():
+@app.route('/signup', methods=['GET','POST'])
+def signup():
 	if request.method == 'POST':
-		return render_template('post.html')
-	return render_template('get.html')
+		full_name = request.form.get('full_name')
+		username = request.form.get('username').lower()
+		email = request.form.get('email')
+		phone = request.form.get('phone')
+		password = request.form.get('password')
+		password_confirm = request.form.get('password_confirm')
+		if not full_name:
+			return render_template('signup.html', full_name_error="Please enter a name.")
+		if not username:
+			return render_template('signup.html', username_error="Please enter a username.")
+		if not email:
+			return render_template('signup.html', email_error="Please enter a email.")
+		if not phone:
+			return render_template('signup.html', phone_error="Please enter a phone number.")
+		if not valid_number(phone):
+			return render_template('signup.html', phone_error="Please enter a valid phone number.")
+		if not valid_email(email):
+			return render_template('signup.html', email_error="Please enter a valid email.")
+		if not password:
+			return render_template('signup.html', password_error="Please enter a password.")
+		if not password_confirm:
+			return render_template('signup.html', password_confirm_error="Please re-type your password.")
+		if not valid_username(username):
+			return render_template('signup.html', username_error="Enter a valid username.")
+		if not valid_password(password):
+			return render_template('signup.html', password_error="Enter a valid password.")
+		if password != password_confirm:
+			return render_template('signup.html', password_confirm_error="Passwords must match")
+		result = users.find_one({"username":username})
+		if not result is None:
+			if valid_pw(username, password, result.get('password')):
+				session['username'] = username
+				session['name'] = result.get('name')
+				return redirect('/')
+			else:
+				return render_template('signup_tutor.html', username_error="Username taken.")
+		password = make_pw_hash(username,password)
+		user_id = users.insert({"username": username,"password": password,"name":full_name,'email':email,"phone":phone,'old_purchases':[]})
+		session_login(username, full_name)
+		return redirect('/')
+		return redirect('/')
+	return render_template('signup.html')
 
 if __name__ == '__main__':
 	port = int(os.environ.get('PORT', 8000))

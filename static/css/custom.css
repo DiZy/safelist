@@ -5,6 +5,20 @@ h1{
 .center{
 	text-align: center;
 }
+.left{
+	text-align: left;
+}
 *{
+	color: #008cba;
+}
+.circle{
+	border-radius: 5px;
+}
+.hdrlnk{
+	font-size: 25px;
+
+}
+.error{
+	font-size: 25px;
 	color: #e74c3c;
 }
