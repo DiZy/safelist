@@ -37,7 +37,7 @@ def showItem(item):
 	return showC(item)
 @app.route('/<shop>/<id>')
 def show(shop,id):
-	driver = webdriver.PhantomJS(executable_path='bin/phantomjs')
+	driver = webdriver.PhantomJS(executable_path='./bin/phantomjs')
 	driver.get("http://philadelphia.craigslist.org/"+shop+"/"+id+".html")
 	driver.find_element_by_class_name("reply_button").click()
 	a = driver.find_element_by_class_name("anonemail")
