@@ -1,6 +1,7 @@
-flask-boilerplate
+<<<<<<< HEAD
+<h1>SafeList</h1>
+=======
+Safe List
 =================
-
-Ready to use and deploy to Heroku!
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+An easier way to order from craigslist
+>>>>>>> 3b81111e9f8c8eaba5903edd788aad4be9cdfd9e

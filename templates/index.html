@@ -1,5 +1,35 @@
 {% extends "base.html" %}
-{% block title %}GET Request{% endblock %}
+{% block title %}{% endblock %}
 {% block content %}
-	<h1>Your App Is Running!</h1>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<h1>Safelist</h1>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<input class="form-control" placeholder="search">
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<select class="form-control" id="select">
+                <option>Philly</option>
+            </select>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+	<br>
+	<div class="center">
+		<button class="btn btn-lg btn-primary">Search</button>
+	</div>
+</div>
 {% endblock %}
