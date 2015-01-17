@@ -4,7 +4,7 @@ import hashlib
 import datetime
 import random
 import string
-
+from flask import session
 SECRET = "pennapps"
 USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
 PASSWORD_RE = re.compile(r"^.{3,20}$")
