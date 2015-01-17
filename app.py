@@ -31,6 +31,7 @@ def showC(item=None):
 		page = requests.get("http://philadelphia.craigslist.org/search/sss?query="+item+"&sort=rel")
 	soup = bs4.BeautifulSoup(page.text)
 	links = soup.select('a.hdrlnk')
+	prices = soup.select('span.price')
 	stringLinks = []
 	onlyLinks = []
 	for x in range(0,len(links)):
@@ -40,7 +41,7 @@ def showC(item=None):
 	length = 20
 	if (len(stringLinks) < 20):
 		length = len(stringLinks)
-	return render_template('display.html', items=stringLinks, links = onlyLinks, length = length)
+	return render_template('display.html', prices=prices, items=stringLinks, links = onlyLinks, length = length)
 @app.route('/show/<item>')
 def showItem(item):
 	return showC(item)

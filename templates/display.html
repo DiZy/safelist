@@ -8,7 +8,9 @@
 		{% for x in range(0,length) %}
 			{% autoescape off%} 
 				{{ items[x] }}
+				{{prices[x*2]}}
 			{% endautoescape %}
+
 			<br>
 			<button class="btn btn-primary center" onclick="location.href = '{{ links[x] }}';">Interested?</button>
 			<br>
