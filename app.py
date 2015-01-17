@@ -7,6 +7,7 @@ import os
 from utils import *
 from pymongo import *
 import stripe
+import uuid
 
 app = Flask(__name__)
 app.secret_key = 'not_really_secret'
@@ -104,7 +105,7 @@ def signup():
 			else:
 				return render_template('signup_tutor.html', username_error="Username taken.")
 		password = make_pw_hash(username,password)
-		user_id = users.insert({"username": username,"password": password,"name":full_name,'email':email,"phone":phone,'old_purchases':[]})
+		user_id = users.insert({"_id": uuid.uuid4(), "username": username,"password": password,"name":full_name,'email':email,"phone":phone,'old_purchases':[]})
 		session_login(username, full_name)
 		return redirect('/')
 		return redirect('/')
