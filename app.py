@@ -46,22 +46,12 @@ def showItem(item):
 	return showC(item)
 @app.route('/<shop>/<id>')
 def show(shop,id):
-	os.system("""
-		vendor/phantomjs/bin/phantomjs
-		console.log('Loading a web page');
-		var page = require('webpage').create();
-		var url = """+"http://philadelphia.craigslist.org/"+shop+"/"+id+".html"+"""
-		page.open(url, function (status) {
-			console.log("page was loaded");
-		  //Page is loaded!
-		  phantom.exit();
-		});
-		""")
 	# driver = webdriver.PhantomJS(executable_path="vendor/phantomjs/bin/phantomjs")
 	# driver.get("http://philadelphia.craigslist.org/"+shop+"/"+id+".html")
 	# driver.find_element_by_class_name("reply_button").click()
 	# a = driver.find_element_by_class_name("anonemail")
-	return render_template('get.html', person="a")
+	a="teamsafelist1@gmail.com"
+	return render_template('get.html', person=a)
 @app.route('/signup', methods=['GET','POST'])
 def signup():
 	if request.method == 'POST':
