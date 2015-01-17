@@ -16,8 +16,10 @@ def chance():
 	return redirect('/')
 
 @app.route('/showC')
-def showC():
+def showC(item=None):
 	page = requests.get("http://philadelphia.craigslist.org/search/sss?query="+"monitor"+"&sort=rel")
+	if item:
+		page = requests.get("http://philadelphia.craigslist.org/search/sss?query="+item+"&sort=rel")
 	soup = bs4.BeautifulSoup(page.text)
 	links = soup.select('a.hdrlnk')
 	stringLinks = []
@@ -30,7 +32,9 @@ def showC():
 	if (len(stringLinks) < 20):
 		length = len(stringLinks)
 	return render_template('display.html', items=stringLinks, links = onlyLinks, length = length)
-
+@app.route('/showC/<item>')
+def showItem(item):
+	return showC(item)
 @app.route('/<shop>/<id>')
 def show(shop,id):
 	driver = webdriver.PhantomJS()
