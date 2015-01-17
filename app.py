@@ -48,6 +48,10 @@ def showC(item=None):
 	links = soup.select('a.hdrlnk')
 	prices = soup.select('span.price')
 	images = soup.select('img')
+	realPrices = []
+	for x in range(0, len(prices)):
+		realPrices.append(prices[x].text.replace("$", ""))
+	print realPrices
 	print images
 	stringLinks = []
 	onlyLinks = []
@@ -62,8 +66,8 @@ def showC(item=None):
 @app.route('/show/<item>')
 def showItem(item):
 	return showC(item)
-@app.route('/<shop>/<id>')
-def show(shop,id):
+@app.route('/<shop>/<id>/<price>')
+def show(shop,id,price):
 	# driver = webdriver.PhantomJS(executable_path="vendor/phantomjs/bin/phantomjs")
 	# driver.get("http://philadelphia.craigslist.org/"+shop+"/"+id+".html")
 	# driver.find_element_by_class_name("reply_button").click()
@@ -91,6 +95,7 @@ def show(shop,id):
 		<div class="row">
 			<div class="col-md-4"></div>
 			<div class="col-md-4">
+				<label>Address</label><br>
 				<input class="form-control circle" placeholder="Address" name="address">
 			</div>
 			<div class="col-md-4"></div>
@@ -98,8 +103,33 @@ def show(shop,id):
 		<br>
 		<div class="row">
 			<div class="col-md-4"></div>
+			<label>Time</label>
 			<div class="col-md-4">
 				<input class="form-control circle" placeholder="Time" name="time">
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<label>Credit Card Number</label>
+			<div class="col-md-4">
+				<input class="form-control circle" placeholder="Credit" name="creditcard">
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<label>Expiration Date</label>
+			<div class="col-md-4">
+				<input class="form-control circle" placeholder="Time" name="date">
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<label>CVC</label>
+			<div class="col-md-4">
+				<input class="form-control circle" placeholder="Time" name="CVC">
 			</div>
 			<div class="col-md-4"></div>
 		</div>
@@ -108,14 +138,14 @@ def show(shop,id):
 			<h3>Price: </h3>
 			<br>
 			<button class="btn btn-lg btn-primary" id="accept">Accept</button>
-			<button class="btn btn-lg btn-primary" style="background-color:red"id="decline">Decline</button>
+			<button class="btn btn-lg btn-primary" style=""id="decline">Decline</button>
 		</div>
 		</form>
 	</div>
 	'''
 	message.set_subject("Interested In Buying")
 	message.set_html(email_str)
-	print s.send(message)
+	# print s.send(message)
 	return render_template('get.html', person=a)
 @app.route('/signin', methods=['GET', 'POST'])
 def sign_in():
