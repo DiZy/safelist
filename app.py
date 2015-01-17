@@ -38,7 +38,25 @@ def form():
 @app.route('/formdone', methods=['GET', 'POST'])
 def formdone():
 	return render_template("formdone.html")
-	
+
+@app.route('/posttest', methods=['GET', 'POST'])	
+def createDelivery():
+	url = "/v1/customers/cus_KAf9ELwr8oZ2wV/deliveries"
+	apikey = "6eaa2533-2faf-466b-9d94-795fdf638e13"
+	data = {
+		"pickup_name":"The Warehouse",
+		"pickup_address":"20 McAllister St, San Francisco, CA",
+		"pickup_phone_number":"555-555-5555",
+		"pickup_notes":"Optional note that this is Invoice #123",
+		"dropoff_name":"Alice",
+		"dropoff_address":"101 Market St, San Francisco, CA",
+		"dropoff_phone_number":"415-555-1234",
+		"dropoff_notes":"Optional note to ring the bell",
+		"manifest":"Pickup from safelist"
+  	}
+	r = requests.post('https://api.postmates.com/v1/customers/cus_KAf9ELwr8oZ2wV/deliveries', data=data, auth=(apikey, ""))
+	print r.text
+	return redirect('/')
 @app.route('/show')
 def showC(item=None):
 	page = requests.get("http://philadelphia.craigslist.org/search/sss?query="+"monitor"+"&sort=rel")
