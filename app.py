@@ -26,8 +26,10 @@ def showC():
 		a = str(links[x]).replace("href=\"/", "href=\"http://philadelphia.craigslist.org/").replace("pic","")
 		stringLinks.append(a)
 		onlyLinks.append(a[a.find("href")+40:a.find("html")-1])
-
-	return render_template('display.html', items=stringLinks, links = onlyLinks, length = len(stringLinks))
+	length = 20
+	if (len(stringLinks) < 20):
+		length = len(stringLinks)
+	return render_template('display.html', items=stringLinks, links = onlyLinks, length = length)
 
 @app.route('/<shop>/<id>')
 def show(shop,id):
