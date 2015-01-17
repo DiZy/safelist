@@ -38,6 +38,7 @@ def showC(item=None):
 	if item:
 		page = requests.get("http://philadelphia.craigslist.org/search/sss?query="+item+"&sort=rel")
 	soup = bs4.BeautifulSoup(page.text)
+	
 	links = soup.select('a.hdrlnk')
 	prices = soup.select('span.price')
 	images = soup.select('img')
