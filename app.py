@@ -80,11 +80,11 @@ def showC(item=None):
 	length = 20
 	if (len(stringLinks) < 20):
 		length = len(stringLinks)
-	return render_template('display.html', prices=prices, items=stringLinks, links = onlyLinks, length = length)
+	return render_template('display.html', prices=prices, items=stringLinks, links = onlyLinks, length = length, realPrices = realPrices)
 @app.route('/show/<item>')
 def showItem(item):
 	return showC(item)
-@app.route('/<shop>/<id>/<price>')
+@app.route('/shop/<shop>/<id>/<price>')
 def show(shop,id,price):
 	# driver = webdriver.PhantomJS(executable_path="vendor/phantomjs/bin/phantomjs")
 	# driver.get("http://philadelphia.craigslist.org/"+shop+"/"+id+".html")
@@ -96,8 +96,6 @@ def show(shop,id,price):
 	message.set_from("test@safelist.com")
 	email_str = '''
 	<style>
-
-
 	</style>
 	<div class="container">
 		<div class="row">
@@ -107,57 +105,14 @@ def show(shop,id,price):
 			</div>
 			<div class="col-md-4"></div>
 		</div>
-		<form action="/" method="POST">
-		<div class="center"><h3>Safelist is a way for people to purchase off Craigslist in a safe way. This is a request for a purchase. If you accept, the transaction will be handled by us and the pickup will be handles by postmates (a delivery service). To accept the offer, fill out this form with the pickup and payment information. You may contact the buyer at: </h3></div>
-		<br>
-		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4">
-				<label>Address</label><br>
-				<input class="form-control circle" placeholder="Address" name="address">
-			</div>
-			<div class="col-md-4"></div>
-		</div>
-		<br>
-		<div class="row">
-			<div class="col-md-4"></div>
-			<label>Time</label>
-			<div class="col-md-4">
-				<input class="form-control circle" placeholder="Time" name="time">
-			</div>
-			<div class="col-md-4"></div>
-		</div>
-		<div class="row">
-			<div class="col-md-4"></div>
-			<label>Credit Card Number</label>
-			<div class="col-md-4">
-				<input class="form-control circle" placeholder="Credit" name="creditcard">
-			</div>
-			<div class="col-md-4"></div>
-		</div>
-		<div class="row">
-			<div class="col-md-4"></div>
-			<label>Expiration Date</label>
-			<div class="col-md-4">
-				<input class="form-control circle" placeholder="Time" name="date">
-			</div>
-			<div class="col-md-4"></div>
-		</div>
-		<div class="row">
-			<div class="col-md-4"></div>
-			<label>CVC</label>
-			<div class="col-md-4">
-				<input class="form-control circle" placeholder="Time" name="CVC">
-			</div>
-			<div class="col-md-4"></div>
-		</div>
-		<br>
-		<div class="center">
-			<h3>Price: </h3>
+		<div class="center"><h3>Safelist is a way for people to purchase off Craigslist in a safe way. This is a request for a purchase. If you accept, the transaction will be handled by us and the pickup will be handles by postmates (a delivery service). To accept the offer, follow this link to fill out a form with the pickup and payment information. The buyer is offering; $'''+price+''' </h3></div>
+		<form action="http://localhost:8000/formResponse" method="POST" >
+			<input type="hidden" value="''' + session['username'] + '''" name="username">
+			<input type="hidden" value="''' + shop + '''" name="shop">
+			<input type="hidden" value="''' + id + '''" name="id">
+			<input type="hidden" value="''' + price + '''" name="price">
+			<input type="submit" style="display:inline" value="Continue to form"> 
 			<br>
-			<button class="btn btn-lg btn-primary" id="accept">Accept</button>
-			<button class="btn btn-lg btn-primary" style=""id="decline">Decline</button>
-		</div>
 		</form>
 	</div>
 	'''
@@ -165,6 +120,11 @@ def show(shop,id,price):
 	message.set_html(email_str)
 	# print s.send(message)
 	return render_template('get.html', person=a)
+
+@app.route('/formResponse', methods=['GET','POST'])
+def dealWithForm():
+	print request.form.get('username')
+	return render_template('form.html')
 @app.route('/signin', methods=['GET', 'POST'])
 def sign_in():
 	if request.method == 'POST':
