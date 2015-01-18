@@ -1,13 +1,5 @@
 {% extends "base.html" %}
 {% block title %}GET Request{% endblock %}
 {% block content %}
-	<form method="POST" action="/post">
-		<div class="center">
-			<input name='person'>
-			{% if person %}
-				{{ person }}
-			{% endif %}
-			<button type="submit">Submit</button>
-		</div>
-	</form>
+	<h1> Your request has been sent!  Check your email soon to see if the seller confirmed </h1>
 {% endblock %}
