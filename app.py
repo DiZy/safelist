@@ -144,9 +144,23 @@ def show(shop,id,price):
 	'''
 	message.set_subject("Interested In Buying")
 	message.set_html(email_str)
-	
+
 	print s.send(message)
 	return render_template('get.html', person=a)
+
+@app.route('/decline/<user>')
+def sendDecline(user):
+	userEmail = users.find_one({'username':user})['email']
+	message = sendgrid.Mail()
+	message.add_to(userEmail)
+	message.set_from("test@safelist.com")
+	email_str = '''
+		<h1> Your order has been declined :(</h1>
+	'''
+	message.set_subject("Order Confrimed")
+	message.set_html(email_str)
+	print s.send(message)
+	return redirect("/")
 
 @app.route('/formResponse', methods=['GET','POST'])
 def dealWithForm():
