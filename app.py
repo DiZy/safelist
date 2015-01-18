@@ -133,7 +133,7 @@ def show(shop,id,price):
 			<div class="col-md-4"></div>
 		</div>
 		<div class="center"><h3>Safelist is a way for people to purchase off Craigslist in a safe way. This is a request for a purchase of <a href="'''+url+'''"> this item </a>. If you accept, the transaction will be handled by us and the pickup will be handles by postmates (a delivery service). To accept the offer, follow this link to fill out a form with the pickup and payment information. The buyer is offering; $'''+price+''' </h3></div>
-		<form action="http://localhost:8000/formResponse" method="POST" >
+		<form action="http://safelist.herokuapp.com/formResponse" method="POST" >
 			<input type="hidden" value="''' + session['username'] + '''" name="username">
 			<input type="hidden" value="''' + url + '''" name="url">
 			<input type="hidden" value="''' + price + '''" name="price">
