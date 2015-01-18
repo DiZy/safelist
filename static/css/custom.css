@@ -20,11 +20,6 @@ h1{
 }
 .row {
 	display:block;
-	margin: 0 auto;
-	text-align:center;
-	border-bottom: 0.5px solid;
-	margin: 3px 0px;
-	padding: 6px 0px;
 }
 
 .title {
@@ -44,5 +39,5 @@ h1{
 }
 .btn {
 	font-size: 12px;
-	
+
 }
