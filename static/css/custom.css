@@ -14,11 +14,35 @@ h1{
 .circle{
 	border-radius: 5px;
 }
-.hdrlnk{
-	font-size: 25px;
-
-}
 .error{
 	font-size: 25px;
 	color: #e74c3c;
+}
+.row {
+	display:block;
+	margin: 0 auto;
+	text-align:center;
+	border-bottom: 0.5px solid;
+	margin: 3px 0px;
+	padding: 6px 0px;
+}
+
+.title {
+	font-size: 14px;
+}
+.price {
+	display: inline-block;
+}
+
+.request {
+	display: block;
+}
+
+.table {
+	width: 60%;
+	margin: 0 auto;
+}
+.btn {
+	font-size: 12px;
+	
 }

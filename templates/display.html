@@ -1,20 +1,19 @@
 {% extends "base.html" %}
 {% block title %}Results{% endblock %}
 {% block content %}
-	<h1>Results</h1>
-	<div class="row">
-		<div class="col-md-4"></div>
-		<div class="col-md-8">
-		{% for x in range(0,length) %}
-			{% autoescape off%} 
-				{{ items[x] }}
-				{{prices[x*2]}}
-			{% endautoescape %}
-
-			<br>
-			<button class="btn btn-primary center" onclick="location.href = '/shop{{ links[x] }}/{{ realPrices[x*2] }}';">Request Purchase</button>
-			<br>
-		{% endfor %}
-		</div>
+<h1>Results</h1>
+<table class="table table-striped">
+{% for x in range(0,length) %}
+	<tr>
+	{% autoescape off%}
+		<td><p class='title'>{{ items[x] }}</p></td>
+		<td>{{prices[x*2]}}</td>
+	{% endautoescape %}
+		<td>
+		<button class="btn btn-primary center" onclick="location.href = '/shop{{ links[x] }}/{{ realPrices[x*2] }}';">Request Purchase</button>
+		</td>
 	</div>
+	</tr>
+{% endfor %}
+</table>
 {% endblock %}
