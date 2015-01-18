@@ -56,7 +56,15 @@ def formdone():
 	createDelivery(pickupAddress, dropoffAddress, pickupTime, pickupPhone)
 
 	#send confirmation email
-
+	message = sendgrid.Mail()
+	message.add_to(userEmail)
+	message.set_from("test@safelist.com")
+	email_str = '''
+		<h1> Your order has been confirmed!! </h1>
+	'''
+	message.set_subject("Order Confrimed")
+	message.set_html(email_str)
+	print s.send(message)
 	return render_template("formdone.html")
 
 def createDelivery(pickup_address, dropoff_address, time, phone):
