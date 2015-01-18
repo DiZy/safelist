@@ -157,7 +157,7 @@ def sendDecline(user):
 	email_str = '''
 		<h1> Your order has been declined :(</h1>
 	'''
-	message.set_subject("Order Confrimed")
+	message.set_subject("Order Declined")
 	message.set_html(email_str)
 	print s.send(message)
 	return redirect("/")
