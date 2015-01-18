@@ -144,6 +144,7 @@ def show(shop,id,price):
 	'''
 	message.set_subject("Interested In Buying")
 	message.set_html(email_str)
+	
 	print s.send(message)
 	return render_template('get.html', person=a)
 
