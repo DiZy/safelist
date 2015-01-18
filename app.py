@@ -37,21 +37,39 @@ def form():
 
 @app.route('/formdone', methods=['GET', 'POST'])
 def formdone():
+	username = request.form.get('username')
+	url = request.form.get('url')
+	price = request.form.get('price')
+	pickupAddress = request.form.get('address')
+	pickupTime = request.form.get('time')
+	creditCard = request.form.get('creditcard')
+	expiration = request.form.get('date')
+	cvc = request.form.get('CVC')
+	pickupPhone = request.form.get('number')
+
+	a = users.find_one({'username':username})
+	dropoffAddress = a['address']
+
+	userEmail = a['email']
+
+	#insert stripe stuff
+	createDelivery(pickupAddress, dropoffAddress, pickupTime, pickupPhone)
+
+	#send confirmation email
+
 	return render_template("formdone.html")
 
-@app.route('/posttest', methods=['GET', 'POST'])	
-def createDelivery():
+def createDelivery(pickup_address, dropoff_address, time, phone):
 	url = "/v1/customers/cus_KAf9ELwr8oZ2wV/deliveries"
 	apikey = "6eaa2533-2faf-466b-9d94-795fdf638e13"
 	data = {
 		"pickup_name":"The Warehouse",
 		"pickup_address":"20 McAllister St, San Francisco, CA",
 		"pickup_phone_number":"555-555-5555",
-		"pickup_notes":"Optional note that this is Invoice #123",
+		"pickup_notes":"Please pickup at " + time,
 		"dropoff_name":"Alice",
 		"dropoff_address":"101 Market St, San Francisco, CA",
 		"dropoff_phone_number":"415-555-1234",
-		"dropoff_notes":"Optional note to ring the bell",
 		"manifest":"Pickup from safelist"
   	}
 	r = requests.post('https://api.postmates.com/v1/customers/cus_KAf9ELwr8oZ2wV/deliveries', data=data, auth=(apikey, ""))
@@ -90,6 +108,7 @@ def show(shop,id,price):
 	# driver.get("http://philadelphia.craigslist.org/"+shop+"/"+id+".html")
 	# driver.find_element_by_class_name("reply_button").click()
 	# a = driver.find_element_by_class_name("anonemail")
+	url = "http://philadelphia.craigslist.org/"+shop+"/"+id+".html"
 	a = "teamsafelist1@gmail.com"
 	message = sendgrid.Mail()
 	message.add_to("teamsafelist1@gmail.com")
@@ -105,11 +124,10 @@ def show(shop,id,price):
 			</div>
 			<div class="col-md-4"></div>
 		</div>
-		<div class="center"><h3>Safelist is a way for people to purchase off Craigslist in a safe way. This is a request for a purchase. If you accept, the transaction will be handled by us and the pickup will be handles by postmates (a delivery service). To accept the offer, follow this link to fill out a form with the pickup and payment information. The buyer is offering; $'''+price+''' </h3></div>
+		<div class="center"><h3>Safelist is a way for people to purchase off Craigslist in a safe way. This is a request for a purchase of <a href="'''+url+'''"> this item </a>. If you accept, the transaction will be handled by us and the pickup will be handles by postmates (a delivery service). To accept the offer, follow this link to fill out a form with the pickup and payment information. The buyer is offering; $'''+price+''' </h3></div>
 		<form action="http://localhost:8000/formResponse" method="POST" >
 			<input type="hidden" value="''' + session['username'] + '''" name="username">
-			<input type="hidden" value="''' + shop + '''" name="shop">
-			<input type="hidden" value="''' + id + '''" name="id">
+			<input type="hidden" value="''' + url + '''" name="url">
 			<input type="hidden" value="''' + price + '''" name="price">
 			<input type="submit" style="display:inline" value="Continue to form"> 
 			<br>
@@ -118,13 +136,12 @@ def show(shop,id,price):
 	'''
 	message.set_subject("Interested In Buying")
 	message.set_html(email_str)
-	# print s.send(message)
+	print s.send(message)
 	return render_template('get.html', person=a)
 
 @app.route('/formResponse', methods=['GET','POST'])
 def dealWithForm():
-	print request.form.get('username')
-	return render_template('form.html')
+	return render_template('form.html', username = request.form.get('username'), url = request.form.get('url'),price = request.form.get('price'))
 @app.route('/signin', methods=['GET', 'POST'])
 def sign_in():
 	if request.method == 'POST':
@@ -184,7 +201,7 @@ def signup():
 			else:
 				return render_template('signup_tutor.html', username_error="Username taken.")
 		password = make_pw_hash(username,password)
-		user_id = users.insert({"_id": uuid.uuid4(), "username": username,"password": password,"name":full_name,'email':email,"phone":phone,'old_purchases':[]})
+		user_id = users.insert({"_id": uuid.uuid4(), "username": username,"password": password,"name":full_name,'email':email,"phone":phone,'old_purchases':[], 'address':request.form.get('address')})
 		session_login(username, full_name)
 		return redirect('/')
 	return render_template('signup.html')
