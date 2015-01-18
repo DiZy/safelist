@@ -41,3 +41,8 @@ h1{
 	font-size: 12px;
 
 }
+.request_sent {
+	font-size: 24px;
+	color: black;
+	text-align: center;
+}
