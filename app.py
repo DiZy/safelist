@@ -17,7 +17,7 @@ db = client.get_default_database()
 users = db.users
 charges = db.charges
 
-s  = sendgrid.SendGridClient('parasm', 'bcabooks')
+s  = sendgrid.SendGridClient('username', 'password')
 
 @app.route('/', methods=['GET','POST'])
 def hello():
